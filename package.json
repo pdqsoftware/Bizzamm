@@ -1,0 +1,11 @@
+{
+  "name": "paul_pritchard",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "serve": "nodemon server.js"
+  },
+  "dependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

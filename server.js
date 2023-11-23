@@ -1,6 +1,6 @@
 const http = require('http')
 const fs = require('fs').promises
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8080
 const { getOTP } = require('./functions')
 let data = require("./data");
 
@@ -25,7 +25,7 @@ const server = http.createServer(async (req, res) => {
         //
         // Initial call to load request OTP HTML page
         //
-        // console.log('/api/requestotp - GET')
+        console.log('/api/requestotp - GET')
         fs.readFile(__dirname + '/requestotp.html')
         .then(contents => {
             const mytext=contents.toString()
@@ -41,7 +41,7 @@ const server = http.createServer(async (req, res) => {
 
     } else if (req.url.match(/\/api\/requestotp?/) && req.method === "GET") {
         // Request for a OTP with email sent as GET request
-        // console.log('/api/requestotp - POST')
+        console.log('/api/requestotp? - GET')
         const otp = getOTP(req.url)
         fs.readFile(__dirname + '/requestotp.html')
         .then(contents => {
