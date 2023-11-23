@@ -1,3 +1,0 @@
-# Paul Pritchard
-
-This readme will contain details of the project including things like ToDos...
