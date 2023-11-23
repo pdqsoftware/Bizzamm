@@ -1,0 +1,3 @@
+# Paul Pritchard
+
+This file will contains notes which I'll add as I go along...
