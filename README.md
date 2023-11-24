@@ -11,3 +11,7 @@ To obtain a OTP:
 
 To validate a OTP:
 # https://paul-8080.entrostat.dev/api/validateOtp
+
+
+Required NPM modules:
+  pg-promise

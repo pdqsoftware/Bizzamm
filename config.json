@@ -1,0 +1,7 @@
+{
+    "pghost": "127.0.0.1",
+    "pgport": "5432",
+    "pgdb": "my_test",
+    "pguser": "my_test",
+    "pgpass": "my_test"
+}
