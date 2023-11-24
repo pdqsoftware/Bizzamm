@@ -15,3 +15,8 @@ To validate a OTP:
 
 Required NPM modules:
   pg-promise
+
+
+ToDo:
+1.  Quite a bit of duplicated code in server.js
+2.  Complete the function descriptive comments

@@ -2,7 +2,7 @@ const http = require('http')
 const url = require('url')
 const fs = require('fs').promises
 const PORT = process.env.PORT || 8080
-const { getOTP, createNewUser, getUser, processUser } = require('./functions')
+const { getOTP, createNewUser, getUser, processUser, processUserResend } = require('./functions')
 let data = require("./data");
 
 
@@ -60,8 +60,51 @@ const server = http.createServer(async (req, res) => {
             // Existing user
             webResponse = processUser(data, user, emailaddr)
         }
-        // const otp = 998877 // getOTP(req.url)
-        // `Your OTP is: ${otp}`
+
+        fs.readFile(__dirname + '/requestotp.html')
+        .then(contents => {
+            const mytext=contents.toString()
+            const result = mytext.replace("OPT-IN-HERE", webResponse);
+            const message = Buffer.from(result)
+            res.setHeader("Content-Type", "text/html");
+            res.writeHead(200)
+            res.write(message)
+            res.end()
+        })
+        .catch(err => {
+            res.writeHead(500)
+            res.end(err)
+        })
+
+    } else if (req.url.match(/\/api\/resendotp?/) && req.method === "GET") {
+        // Resend a OTP with email sent as GET request
+        console.log('/api/resendotp? - GET')
+
+        // Validate the request
+        const parseUrl = url.parse(req.url, true)
+        const emailaddr = parseUrl.query.emailaddr
+        const user = getUser(emailaddr)
+        console.log('/api/resendotp? - user = ', user)
+
+        let webResponse = ""
+        if (user.length === 0) {
+            webResponse = "Submitted email does not exist!"
+        } else {
+            // Existing user
+            webResponse = processUserResend(data, user, emailaddr)
+        }
+        // webResponse = "Resend successful"
+
+        // if (user.length === 0) {
+        //     // New user
+        //     const newUser = createNewUser(data, emailaddr)
+        //     data.push(newUser)
+        //     console.log('newUser:', newUser)
+        //     webResponse = `Your OTP is: ${newUser.OTP[0].pin}`
+        // } else {
+        //     // Existing user
+        //     webResponse = processUser(data, user, emailaddr)
+        // }
 
         fs.readFile(__dirname + '/requestotp.html')
         .then(contents => {

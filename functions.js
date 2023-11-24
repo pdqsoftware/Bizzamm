@@ -17,7 +17,6 @@ const ageOtp = (otp) => {
     // Return the age of the OTP
     const timeNow = new Date()
     const timeThen = new Date(otp)
-    console.log("timeThen", timeThen)
     // Calculate minutes difference
     const timeDiff = (timeNow - timeThen) / 1000 / 60
     // Seconds rounded to an integer
@@ -90,15 +89,29 @@ module.exports = {
         // 3.  email (string) - email address for new user
         //
         console.log("pin = ", user[0].OTP[0].dateTime)
-        const pinAge = ageOtp(user[0].OTP[0].dateTime)
-        console.log(pinAge)
+        const pinAge = parseInt(ageOtp(user[0].OTP[0].dateTime), 10)
+        console.log("pinage:", pinAge)
 
         // Older than 30 seconds?
-        console.log('expires:', rules.expireSeconds)
-        if (pinAge > config.expireSeconds) {
+        if (pinAge >= parseInt(rules.expireSeconds, 10)) {
             return "OTP has expired!"
         }
+
         return "OK"
+    },
+
+    processUserResend(users, user, email) {
+        console.log('Process resend')
+        const pinAge = parseInt(ageOtp(user[0].OTP[0].dateTime), 10)
+        console.log("pinage:", pinAge)
+
+        // Resend within X minutes
+        if (pinAge <= parseInt(rules.resendMinutes, 10) * 60) {
+            // Resend same OTP - ToDo: needs to update dateTime
+            return `Your OTP is: ${user[0].OTP[0].pin}`
+        }
+        // Else user must request a new OTP
+        return "Resend time has elapsed - please request a new OTP"
     }
 
 }

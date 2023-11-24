@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" href="/img/bz_16x16.png" sizes="20x39">
   <title>Paul Pritchard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <style>.button-resend {margin-top: 20px;}</style>
 </head>
 
 <body>
@@ -24,7 +25,9 @@
                     <input class="form-control login-control" placeholder="Email Address" name="emailaddr" id="emailaddr">
                 </div>
                 <p style="color: red;">OPT-IN-HERE</p>
-                <button class="btn btn-lg btn-success btn-block button-login">Submit<i class="login-arrow fa fa-arrow-right"></i></button>
+                <button class="btn btn-lg btn-success btn-block button-submit" value="request">Submit<i class="login-arrow fa fa-arrow-right"></i></button>
+
+                <button class="btn btn-lg btn-success btn-block button-resend" value="resend" formaction="/api/resendotp">Resend<i class="login-arrow fa fa-arrow-right"></i></button>
             </form>
           </div>
         </div>
